@@ -1,6 +1,6 @@
 {
   "name": "ddys-sveltekit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Official SvelteKit integration for the DDYS API with hooks, load helpers, route handlers, Svelte components, caching, SEO helpers, diagnostics, and request form.",
   "type": "module",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "build": "svelte-package",
     "check": "node tools/check.mjs",
     "prepack": "svelte-package",
-    "test": "node tools/check.mjs && node --test tests/*.test.mjs",
+    "test": "node tools/check.mjs && svelte-package && node --test tests/*.test.mjs",
     "typecheck": "svelte-kit sync && svelte-package && tsc --noEmit"
   },
   "engines": { "node": ">=20.0.0" }

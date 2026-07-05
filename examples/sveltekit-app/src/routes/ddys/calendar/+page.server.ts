@@ -1,3 +1,4 @@
+import type { PageServerLoad } from './$types';
 import { loadDdysView } from 'ddys-sveltekit/server';
 
-export const load = (event) => loadDdysView(event, 'calendar');
+export const load: PageServerLoad = (event) => loadDdysView(event, 'calendar');

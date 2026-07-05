@@ -77,6 +77,7 @@ export { ddysManifestGET as GET } from 'ddys-sveltekit/routes';
 ```
 
 `/api/ddys/proxy` 会先做 allow-list 校验。浏览器只请求本地接口，低端影视 API Key 不会进入浏览器 bundle。
+`/api/ddys/revalidate` 必须配置 `DDYS_REVALIDATE_TOKEN`；未配置时接口会返回 403，避免公开清缓存。
 
 ## Load Helpers
 
@@ -138,5 +139,5 @@ node tools/check.mjs
 node --test tests/structure.test.mjs
 pnpm build
 pnpm pack --dry-run
-powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.1
+powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.2
 ```

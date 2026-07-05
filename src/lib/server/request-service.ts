@@ -10,7 +10,8 @@ export async function createRequestFormToken(config: DdysConfig, identity = 'ano
   if (!config.requestForm.enabled) return '';
   if (!config.requestForm.secret && !config.apiKey) throw new DdysError('DDYS form secret is not configured.', 500, 'GET', '/request');
   const expires = Math.floor(Date.now() / 1000) + config.requestForm.tokenTtlSeconds;
-  const payload = `${identity}:${expires}`;
+  const subject = hexEncode(identity);
+  const payload = `${subject}:${expires}`;
   return `${payload}:${await hmac(config.requestForm.secret || config.apiKey || '', payload)}`;
 }
 
@@ -20,7 +21,7 @@ export async function verifyRequestFormToken(config: DdysConfig, token: unknown,
   const parts = String(token || '').split(':');
   if (parts.length !== 3) throw new DdysError('Invalid request token.', 403, 'POST', '/request');
   const [subject = '', expiresText = '', signature = ''] = parts;
-  if (subject !== identity) throw new DdysError('Invalid request token subject.', 403, 'POST', '/request');
+  if (hexDecode(subject) !== identity) throw new DdysError('Invalid request token subject.', 403, 'POST', '/request');
   const expires = Number(expiresText);
   if (!Number.isFinite(expires) || expires < Math.floor(Date.now() / 1000)) throw new DdysError('Request token expired.', 403, 'POST', '/request');
   const expected = await hmac(config.requestForm.secret || config.apiKey || '', `${subject}:${expiresText}`);
@@ -53,8 +54,8 @@ export async function submitDdysRequest(config: DdysConfig, raw: Record<string, 
   if (!config.requestForm.enabled) throw new DdysError('DDYS request form is disabled.', 403, 'POST', '/request');
   const identity = options.identity || 'anonymous';
   await verifyRequestFormToken(config, raw.token || raw.ddys_token, identity);
-  enforceRateLimit(config, identity);
   const input = normalizeRequestInput(raw, config);
+  enforceRateLimit(config, identity);
   const { DdysClient } = await import('../client/client.js');
   return new DdysClient(config, fetch).createRequest(input);
 }
@@ -70,5 +71,11 @@ async function hmac(secret: string, payload: string) {
   const key = await globalThis.crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const signature = await globalThis.crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
   return Array.from(new Uint8Array(signature)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+function hexEncode(value: string) { return Array.from(new TextEncoder().encode(value)).map((byte) => byte.toString(16).padStart(2, '0')).join(''); }
+function hexDecode(value: string) {
+  if (!/^(?:[0-9a-f]{2})*$/i.test(value)) return '';
+  const bytes = new Uint8Array(value.match(/../g)?.map((part) => Number.parseInt(part, 16)) || []);
+  return new TextDecoder().decode(bytes);
 }
 function timingSafeEqual(a: string, b: string) { if (a.length !== b.length) return false; let out = 0; for (let i = 0; i < a.length; i++) out |= a.charCodeAt(i) ^ b.charCodeAt(i); return out === 0; }

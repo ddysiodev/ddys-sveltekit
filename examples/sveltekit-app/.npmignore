@@ -1,0 +1,12 @@
+node_modules
+.svelte-kit
+build
+dist
+coverage
+package
+*.tgz
+*.zip
+*.log
+pnpm-lock.yaml
+.env
+.env.*

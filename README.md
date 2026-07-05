@@ -77,6 +77,7 @@ export { ddysManifestGET as GET } from 'ddys-sveltekit/routes';
 ```
 
 `/api/ddys/proxy` validates an allow-list before forwarding. Browser code only talks to local endpoints, so the DDYS API key never enters the browser bundle.
+`/api/ddys/revalidate` requires `DDYS_REVALIDATE_TOKEN`; without it the endpoint returns 403 instead of exposing public cache invalidation.
 
 ## Load Helpers
 
@@ -138,5 +139,5 @@ node tools/check.mjs
 node --test tests/structure.test.mjs
 pnpm build
 pnpm pack --dry-run
-powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.1
+powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.2
 ```
