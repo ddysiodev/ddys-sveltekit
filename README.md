@@ -139,5 +139,5 @@ node tools/check.mjs
 node --test tests/structure.test.mjs
 pnpm build
 pnpm pack --dry-run
-powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.2
+powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.3
 ```

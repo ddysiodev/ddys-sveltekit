@@ -27,6 +27,12 @@ test('request tokens support IPv6 identities and invalid local input does not co
   const identity = `2001:db8::${Date.now()}`;
   const invalidToken = await createRequestFormToken(config, identity);
   assert.equal(await verifyRequestFormToken(config, invalidToken, identity), true);
+  const legacyIdentity = `127.0.0.${Date.now() % 255}`;
+  const legacyExpires = Math.floor(Date.now() / 1000) + config.requestForm.tokenTtlSeconds;
+  const legacyPayload = `${legacyIdentity}:${legacyExpires}`;
+  const key = await globalThis.crypto.subtle.importKey('raw', new TextEncoder().encode(config.requestForm.secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const legacySignature = Array.from(new Uint8Array(await globalThis.crypto.subtle.sign('HMAC', key, new TextEncoder().encode(legacyPayload)))).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  assert.equal(await verifyRequestFormToken(config, `${legacyPayload}:${legacySignature}`, legacyIdentity), true);
   await assert.rejects(
     submitDdysRequest(config, { title: '', token: invalidToken }, { identity }),
     /Title must be between 1 and 120 characters/

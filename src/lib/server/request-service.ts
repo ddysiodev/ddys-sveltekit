@@ -21,7 +21,7 @@ export async function verifyRequestFormToken(config: DdysConfig, token: unknown,
   const parts = String(token || '').split(':');
   if (parts.length !== 3) throw new DdysError('Invalid request token.', 403, 'POST', '/request');
   const [subject = '', expiresText = '', signature = ''] = parts;
-  if (hexDecode(subject) !== identity) throw new DdysError('Invalid request token subject.', 403, 'POST', '/request');
+  if (hexDecode(subject) !== identity && subject !== identity) throw new DdysError('Invalid request token subject.', 403, 'POST', '/request');
   const expires = Number(expiresText);
   if (!Number.isFinite(expires) || expires < Math.floor(Date.now() / 1000)) throw new DdysError('Request token expired.', 403, 'POST', '/request');
   const expected = await hmac(config.requestForm.secret || config.apiKey || '', `${subject}:${expiresText}`);

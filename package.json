@@ -1,6 +1,6 @@
 {
   "name": "ddys-sveltekit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Official SvelteKit integration for the DDYS API with hooks, load helpers, route handlers, Svelte components, caching, SEO helpers, diagnostics, and request form.",
   "type": "module",
   "license": "MIT",

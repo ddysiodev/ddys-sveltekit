@@ -36,7 +36,7 @@ export type DdysConfigInput = Partial<Omit<DdysConfig, 'cache' | 'proxy' | 'requ
 };
 
 type DdysRuntimeEnv = Record<string, string | undefined>;
-export const DDYS_SVELTEKIT_VERSION = '0.1.2';
+export const DDYS_SVELTEKIT_VERSION = '0.1.3';
 
 export const DEFAULT_DDYS_CONFIG: DdysConfig = {
   apiBaseUrl: 'https://ddys.io/api/v1',
