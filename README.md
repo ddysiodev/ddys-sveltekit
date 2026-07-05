@@ -101,7 +101,9 @@ Available helpers: `loadDdysView`, `loadDdysMovie`, `loadDdysSources`, `loadDdys
 <DdysRequestForm token={data.token} />
 ```
 
-Components: `DdysView`, `DdysGrid`, `DdysCard`, `DdysMovieDetail`, `DdysSources`, `DdysSearch`, `DdysRequestForm`, `DdysDiagnostics`.
+Components: `DdysView`, `DdysGrid`, `DdysList`, `DdysCard`, `DdysMovieDetail`, `DdysSources`, `DdysSearch`, `DdysRequestForm`, `DdysDiagnostics`.
+
+The example app includes `/ddys`, `/ddys/latest`, `/ddys/hot`, `/ddys/movies`, `/ddys/search`, `/ddys/calendar`, `/ddys/movie/[slug]`, `/ddys/movie/[slug]/sources`, `/ddys/collections`, `/ddys/shares`, `/ddys/types`, `/ddys/genres`, `/ddys/regions`, `/ddys/request`, `/ddys/diagnostics`, `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest`.
 
 ## Clients
 
@@ -136,5 +138,5 @@ node tools/check.mjs
 node --test tests/structure.test.mjs
 pnpm build
 pnpm pack --dry-run
-powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.0
+powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.1
 ```

@@ -10,7 +10,8 @@ const requiredFiles = [
   'src/lib/client/client.ts','src/lib/client/error.ts','src/lib/client/index.ts','src/lib/client/proxy-client.ts',
   'src/lib/server/index.ts','src/lib/server/cache.ts','src/lib/server/client.ts','src/lib/server/config.ts','src/lib/server/hooks.ts','src/lib/server/load.ts','src/lib/server/request-service.ts','src/lib/server/seo.ts',
   'src/lib/routes/index.ts','src/lib/routes/proxy.ts','src/lib/routes/request.ts','src/lib/routes/diagnostics.ts','src/lib/routes/revalidate.ts','src/lib/routes/seo.ts',
-  'src/lib/components/DdysCard.svelte','src/lib/components/DdysGrid.svelte','src/lib/components/DdysMovieDetail.svelte','src/lib/components/DdysSources.svelte','src/lib/components/DdysView.svelte','src/lib/components/DdysSearch.svelte','src/lib/components/DdysRequestForm.svelte','src/lib/components/DdysDiagnostics.svelte','src/lib/components/index.ts','src/lib/styles/ddys.css',
+  'src/lib/components/DdysCard.svelte','src/lib/components/DdysGrid.svelte','src/lib/components/DdysList.svelte','src/lib/components/DdysMovieDetail.svelte','src/lib/components/DdysSources.svelte','src/lib/components/DdysView.svelte','src/lib/components/DdysSearch.svelte','src/lib/components/DdysRequestForm.svelte','src/lib/components/DdysDiagnostics.svelte','src/lib/components/index.ts','src/lib/styles/ddys.css',
+  'examples/sveltekit-app/src/routes/ddys/movies/+page.server.ts','examples/sveltekit-app/src/routes/ddys/calendar/+page.server.ts','examples/sveltekit-app/src/routes/ddys/collections/+page.server.ts','examples/sveltekit-app/src/routes/ddys/shares/+page.server.ts','examples/sveltekit-app/src/routes/ddys/types/+page.server.ts','examples/sveltekit-app/src/routes/ddys/genres/+page.server.ts','examples/sveltekit-app/src/routes/ddys/regions/+page.server.ts',
   'public/images/icon-16.png','public/images/icon-32.png','public/images/icon-192.png','public/images/icon-512.png','public/images/logo.png','tests/structure.test.mjs','tools/build-package.ps1','tools/check.mjs'
 ];
 const clientMethods = ['movies','latest','hot','search','suggest','calendar','movie','sources','related','comments','collections','collection','shares','share','requests','activities','user','types','genres','regions','me','createRequest','createComment','deleteComment','reportInvalidResource','follow','unfollow'];
@@ -34,7 +35,7 @@ async function checkPackage() {
 async function checkText() {
   const client = await read('src/lib/client/client.ts');
   for (const method of clientMethods) assert(client.includes(`${method}(`), `DdysClient missing ${method}.`);
-  for (const fragment of ['createDdysHandle','event.locals','loadDdysView','createDdysRequestActions','ddysProxyGET','ddysDiagnosticsGET','ddysRevalidatePOST','createDdysSitemap','DDYS_API_KEY','adapter-static']) {
+  for (const fragment of ['createDdysHandle','event.locals','loadDdysView','createDdysRequestActions','ddysProxyGET','ddysDiagnosticsGET','ddysRevalidatePOST','createDdysSitemap','DDYS_API_KEY','adapter-static','DdysList','/ddys/calendar','/ddys/collections','/ddys/regions']) {
     const found = (await Promise.all((await listFiles(root)).filter((f) => isTextFile(slash(path.relative(root, f)))).map((f) => fs.readFile(f, 'utf8')))).some((text) => text.includes(fragment));
     assert(found, `missing required fragment ${fragment}.`);
   }

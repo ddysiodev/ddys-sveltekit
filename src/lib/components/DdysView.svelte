@@ -3,6 +3,7 @@
   import { DdysProxyClient } from '../client/proxy-client.js';
   import type { DdysQuery, DdysViewName } from '../types/ddys.js';
   import DdysGrid from './DdysGrid.svelte';
+  import DdysList from './DdysList.svelte';
   import DdysMovieDetail from './DdysMovieDetail.svelte';
   import DdysSources from './DdysSources.svelte';
   export let view: DdysViewName = 'latest';
@@ -30,5 +31,6 @@
   {:else if error}<p class="ddys-error">{error}</p>
   {:else if view === 'movie'}<DdysMovieDetail movie={data as never} />
   {:else if view === 'sources'}<DdysSources sources={data} />
+  {:else if ['calendar', 'collections', 'collection', 'shares', 'share', 'requests', 'activities', 'user', 'types', 'genres', 'regions'].includes(view)}<DdysList items={data} />
   {:else}<DdysGrid items={data} {basePath} />{/if}
 </section>

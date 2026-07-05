@@ -6,7 +6,14 @@
   <a href="/ddys">DDYS</a>
   <a href="/ddys/latest">Latest</a>
   <a href="/ddys/hot">Hot</a>
+  <a href="/ddys/movies">Movies</a>
   <a href="/ddys/search">Search</a>
+  <a href="/ddys/calendar">Calendar</a>
+  <a href="/ddys/collections">Collections</a>
+  <a href="/ddys/shares">Shares</a>
+  <a href="/ddys/types">Types</a>
+  <a href="/ddys/genres">Genres</a>
+  <a href="/ddys/regions">Regions</a>
   <a href="/ddys/request">Request</a>
 </nav>
 

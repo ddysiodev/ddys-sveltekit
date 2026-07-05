@@ -101,7 +101,9 @@ export const load = (event) => loadDdysView(event, 'latest', { limit: 24 });
 <DdysRequestForm token={data.token} />
 ```
 
-组件包括：`DdysView`、`DdysGrid`、`DdysCard`、`DdysMovieDetail`、`DdysSources`、`DdysSearch`、`DdysRequestForm`、`DdysDiagnostics`。
+组件包括：`DdysView`、`DdysGrid`、`DdysList`、`DdysCard`、`DdysMovieDetail`、`DdysSources`、`DdysSearch`、`DdysRequestForm`、`DdysDiagnostics`。
+
+示例项目包含 `/ddys`、`/ddys/latest`、`/ddys/hot`、`/ddys/movies`、`/ddys/search`、`/ddys/calendar`、`/ddys/movie/[slug]`、`/ddys/movie/[slug]/sources`、`/ddys/collections`、`/ddys/shares`、`/ddys/types`、`/ddys/genres`、`/ddys/regions`、`/ddys/request`、`/ddys/diagnostics`、`/sitemap.xml`、`/robots.txt`、`/manifest.webmanifest`。
 
 ## Clients
 
@@ -136,5 +138,5 @@ node tools/check.mjs
 node --test tests/structure.test.mjs
 pnpm build
 pnpm pack --dry-run
-powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.0
+powershell -ExecutionPolicy Bypass -File tools/build-package.ps1 -Version 0.1.1
 ```
