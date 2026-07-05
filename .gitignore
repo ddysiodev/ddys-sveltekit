@@ -1,0 +1,9 @@
+node_modules
+dist
+.svelte-kit
+package
+*.tgz
+pnpm-lock.yaml
+.env
+.env.*
+!.env.example
